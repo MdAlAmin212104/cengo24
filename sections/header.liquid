@@ -244,9 +244,9 @@
                                        class="site-header__icon header__icon header__icon--cart link focus-inset"
                                        id="cart-icon-bubble">
                                         {% if cart == empty %}
-                                            <i class="bi bi-bag"></i>
+                                            <i class="bi bi-cart3"></i>
                                         {% else %}
-                                            <i class="bi bi-bag-check"></i>
+                                            <i class="bi bi-cart3"></i>
                                         {% endif %}
                                         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
                                         {%- if cart != empty -%}
@@ -331,9 +331,9 @@
                                        class="site-header__icon header__icon header__icon--cart link focus-inset"
                                        id="cart-icon-bubble">
                                         {% if cart == empty %}
-                                            <i class="bi bi-bag"></i>
+                                            <i class="bi bi-cart3"></i>
                                         {% else %}
-                                            <i class="bi bi-bag-check"></i>
+                                            <i class="bi bi-cart3"></i>
                                         {% endif %}
                                         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
                                         {%- if cart != empty -%}
@@ -434,9 +434,9 @@
                                            class="site-header__icon header__icon header__icon--cart link focus-inset"
                                            id="cart-icon-bubble">
                                             {% if cart == empty %}
-                                                <i class="bi bi-bag"></i>
+                                                <i class="bi bi-cart3"></i>
                                             {% else %}
-                                                <i class="bi bi-bag-check"></i>
+                                                <i class="bi bi-cart3"></i>
                                             {% endif %}
                                             <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
                                             {%- if cart != empty -%}
@@ -555,9 +555,9 @@
                                            class="site-header__icon header__icon header__icon--cart link focus-inset"
                                            id="cart-icon-bubble">
                                             {% if cart == empty %}
-                                                <i class="bi bi-bag"></i>
+                                                <i class="bi bi-cart3"></i>
                                             {% else %}
-                                                <i class="bi bi-bag-check"></i>
+                                                <i class="bi bi-cart3"></i>
                                             {% endif %}
                                             <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
                                             {%- if cart != empty -%}
@@ -675,9 +675,9 @@
                                        class="site-header__icon header__icon header__icon--cart link focus-inset"
                                        id="cart-icon-bubble">
                                         {% if cart == empty %}
-                                            <i class="bi bi-bag"></i>
+                                            <i class="bi bi-cart3"></i>
                                         {% else %}
-                                            <i class="bi bi-bag-check"></i>
+                                            <i class="bi bi-cart3"></i>
                                         {% endif %}
                                         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
                                         {%- if cart != empty -%}
@@ -760,9 +760,9 @@
                                        class="site-header__icon header__icon header__icon--cart link focus-inset"
                                        id="cart-icon-bubble">
                                         {% if cart == empty %}
-                                            <i class="bi bi-bag"></i>
+                                            <i class="bi bi-cart3"></i>
                                         {% else %}
-                                            <i class="bi bi-bag-check"></i>
+                                            <i class="bi bi-cart3"></i>
                                         {% endif %}
                                         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
                                         {%- if cart != empty -%}
@@ -930,8 +930,7 @@
   .section-header .site-header__icon,
   .section-header .site-nav__link,
   .section-header .header__heading-link,
-  .section-header .bi-chevron-down,
-  .section-header .bi-bag-check {
+  .section-header .bi-chevron-down {
     color: {{ section.settings.transparent_text_color }} !important;
     fill: {{ section.settings.transparent_text_color }} !important;
   }
@@ -944,8 +943,7 @@
 
   .section-header.is-scrolled .site-nav__link,
   .section-header.is-scrolled .header__heading-link,
-  .section-header.is-scrolled .bi-chevron-down,
-  .section-header.is-scrolled .bi-bag-check {
+  .section-header.is-scrolled .bi-chevron-down {
     color: {{ section.settings.scrolled_text_color }} !important;
     fill: {{ section.settings.scrolled_text_color }} !important;
   }
@@ -956,26 +954,56 @@
     background-color: {{ section.settings.scrolled_text_color }} !important;
   }
 
-  /* Logo Swapping */
-  .header__heading-logo--transparent {
-    display: block;
-  }
-  .header__heading-logo--default {
-    display: none;
+  /* =========================
+   Logo Display Control
+   ========================= */
+
+/* Default behavior for all pages */
+.header__heading-logo--transparent {
+  display: none !important;
+}
+
+.header__heading-logo--default {
+  display: block !important;
+}
+
+/* If transparent header enabled on homepage, show transparent logo only before scroll */
+{% if section.settings.enable_transparent and request.page_type == 'index' %}
+  .section-header:not(.is-scrolled) .header__heading-logo--transparent {
+    display: block !important;
   }
 
-  /* If no transparent logo, show default */
-  .header__heading-logo--default.no-transparent-logo {
-    display: block;
+  .section-header:not(.is-scrolled) .header__heading-logo--default {
+    display: none !important;
   }
 
+  /* If no transparent logo uploaded, keep default logo visible */
+  .section-header:not(.is-scrolled) .header__heading-logo--default.no-transparent-logo {
+    display: block !important;
+  }
+
+  /* After scroll, show default logo and hide transparent logo */
   .section-header.is-scrolled .header__heading-logo--transparent {
-    display: none;
+    display: none !important;
   }
+
   .section-header.is-scrolled .header__heading-logo--default {
-    display: block;
+    display: block !important;
   }
+{% endif %}
+
   {% endif %}
+
+  {% if request.page_type != 'index' %}
+    img.header__heading-logo.header__heading-logo--transparent.motion-reduce {
+      display: none;
+    }
+  {% endif %}
+  {% unless section.settings.enable_transparent  %}
+    img.header__heading-logo.header__heading-logo--transparent.motion-reduce {
+      display: none;
+    }
+  {% endunless %}
 
   .announcement-bar-section {
     position: fixed !important;

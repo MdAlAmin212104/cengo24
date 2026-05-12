@@ -52,7 +52,11 @@
         "color_text_sub": "#012169",
         "color_background_gradient": "",
         "padding_top": 2,
-        "padding_bottom": 2
+        "padding_bottom": 2,
+        "enable_transparent": true,
+        "transparent_logo": "shopify://shop_images/Gemini_Generated_Image_ilmzi5ilmzi5ilmz-Photoroom_a21383e4-3752-4750-8913-147078e85c20.png",
+        "transparent_text_color": "#ffffff",
+        "scrolled_text_color": "#000000"
       }
     }
   },
