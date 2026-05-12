@@ -175,7 +175,7 @@
     </div>
 </div>
 <div class="header-wrapper container page-width pt-{{ section.settings.padding_top }} pb-{{ section.settings.padding_bottom }} position-relative section-extras-color section-extras-color-{{ section.id }} style-header-default header-{{ section.settings.logo_position }}">
-    <div class="header header-wrap {% if request.page_type contains 'index' and section.settings.header_absolute %} position-absolute w-100{% endif %}"
+    <div class="header header-wrap"
          data-section-id="{{ section.id }}" data-section-type="header-section" data-header-section>
         <header class="site-header"
                 role="banner">
@@ -855,22 +855,15 @@
     --announcement-height: 0px;
   }
 
-
-  .announcement-bar-section {
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1010;
-  }
-
+  {% if section.settings.enable_transparent and request.page_type == 'index' %}
   .section-header {
     position: fixed !important;
     top: var(--announcement-height) !important;
     left: 0;
     width: 100%;
     z-index: 1009;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: transparent !important;
   }
 
   .section-header .header-wrapper.section-extras-color-{{ section.id }} {
@@ -881,7 +874,6 @@
     transition: background-color 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
   }
 
-  
   .section-header .site-header {
     transition: all 0.3s ease;
   }
@@ -900,22 +892,40 @@
     fill: #000000 !important;
   }
 
-  /* Transparent Header Styles */
-  .section-header {
-    position: fixed !important;
-    top: var(--announcement-height, 0);
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-    background-color: transparent !important;
-  }
+  {% endif %}
 
+  /* Non-transparent Header Styles (Other pages or disabled) */
+  {% unless section.settings.enable_transparent and request.page_type == 'index' %}
+  .section-header {
+    background: white !important;
+    box-shadow: 0 2px 10px white !important;
+    margin-bottom: 20px !important;
+    transition: all 0.3s ease;
+  }
+  {% endunless %}
+  
+  .announcement-bar-section {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1010;
+    transition: transform 0.3s ease;
+  }
+  .announcement-bar-section.is-hidden {
+    transform: translateY(-100%);
+  }
   .section-header.is-scrolled {
     background-color: #ffffff !important;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    top: 0 !important;
   }
 
+  .section-header.is-scrolled .header-wrapper.section-extras-color-{{ section.id }} {
+    background-color: #ffffff !important;
+  }
+
+  {% if section.settings.enable_transparent and request.page_type == 'index' %}
   /* Navigation and Icons Color */
   .section-header .site-header__icon,
   .section-header .site-nav__link,
@@ -932,7 +942,6 @@
     background-color: {{ section.settings.transparent_text_color }} !important;
   }
 
-
   .section-header.is-scrolled .site-nav__link,
   .section-header.is-scrolled .header__heading-link,
   .section-header.is-scrolled .bi-chevron-down,
@@ -946,8 +955,6 @@
   .section-header.is-scrolled .hamburger-menu span::after {
     background-color: {{ section.settings.scrolled_text_color }} !important;
   }
-
-  
 
   /* Logo Swapping */
   .header__heading-logo--transparent {
@@ -968,6 +975,7 @@
   .section-header.is-scrolled .header__heading-logo--default {
     display: block;
   }
+  {% endif %}
 
   .announcement-bar-section {
     position: fixed !important;
@@ -996,8 +1004,10 @@
       if (header) {
         if (window.scrollY > 20) {
           header.classList.add('is-scrolled');
+          if (announcement) announcement.classList.add('is-hidden');
         } else {
           header.classList.remove('is-scrolled');
+          if (announcement) announcement.classList.remove('is-hidden');
         }
       }
     };
@@ -1163,6 +1173,12 @@
       "step": 1,
       "label": "t:sections.all.padding.padding_bottom",
       "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_transparent",
+      "default": false,
+      "label": "Enable Transparent Header (Homepage Only)"
     },
     {
       "type": "header",

@@ -146,8 +146,11 @@
     endif
 -%}
 {% sections 'header-group' %}
+{% if template.name == 'index' %}
+  {% sections 'slider_group' %}
+{% endif %}
 <div class="container page-width">
-    {% sections 'slider_group' %}
+    
     <div class="content-wrap-main d-flex flex-nowrap">
         <div id="sidebar-wrap">
             <div class="sticky-lg-top top-sidebar">
