@@ -1,0 +1,213 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "banner_image": "shopify://shop_images/image_83_1.jpg",
+        "color_text": "#012169",
+        "layout": "container page-width"
+      }
+    },
+    "collapsible_content_products": {
+      "type": "collapsible-content",
+      "blocks": {
+        "row1": {
+          "type": "collapsible-row",
+          "settings": {
+            "heading": "Sind die Kissen für alle Schlafpositionen geeignet?",
+            "row_content": "<p>Ja, unsere orthopädischen Memory-Foam-Kissen sind für Seiten-, Rücken- und Bauchschläfer geeignet und bieten optimalen Komfort während der Nacht.</p>",
+            "page": ""
+          }
+        },
+        "row2": {
+          "type": "collapsible-row",
+          "settings": {
+            "heading": "Hilft das Kissen bei Nacken- und Rückenschmerzen?",
+            "row_content": "<p>Das ergonomische Design unterstützt eine gesunde Schlafhaltung und kann helfen, Druck auf Nacken, Schultern und Rücken zu reduzieren.</p>",
+            "page": ""
+          }
+        },
+        "row3": {
+          "type": "collapsible-row",
+          "settings": {
+            "heading": "Passt sich der Memory Foam dem Körper an?",
+            "row_content": "<p>Ja, der hochwertige Memory Foam passt sich Ihrer Kopf- und Nackenform individuell an und sorgt für maximalen Komfort.</p>",
+            "page": ""
+          }
+        },
+        "row4": {
+          "type": "collapsible-row",
+          "settings": {
+            "heading": "Ist der Bezug waschbar?",
+            "row_content": "<p>Ja, der Bezug ist abnehmbar und kann einfach in der Waschmaschine gereinigt werden.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "row1",
+        "row2",
+        "row3",
+        "row4"
+      ],
+      "settings": {
+        "layout": "container container-inner",
+        "style": "style-1",
+        "preheading": "",
+        "heading": "",
+        "subheading": "<h6>Produkte</h6>",
+        "heading_size": "h2",
+        "heading_tag": "h2",
+        "heading_alignment": "text-start",
+        "image_second": false,
+        "image_height": "adapt",
+        "use_custom_colors": false,
+        "color_text": "#000000",
+        "color_background": "#f6f6f6",
+        "color_background_gradient": "",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 0,
+        "padding_bottom": 30,
+        "custom_id": "",
+        "custom_class": ""
+      }
+    },
+    "collapsible_content_shipping": {
+      "type": "collapsible-content",
+      "blocks": {
+        "shipping1": {
+          "type": "collapsible-row",
+          "settings": {
+            "heading": "Wie lange dauert der Versand?",
+            "row_content": "<p>Die Lieferzeit beträgt in der Regel 5–10 Werktage, abhängig von Ihrem Standort.</p>",
+            "page": ""
+          }
+        },
+        "shipping2": {
+          "type": "collapsible-row",
+          "settings": {
+            "heading": "Bieten Sie kostenlosen Versand an?",
+            "row_content": "<p>Ja, wir bieten kostenlosen Versand für ausgewählte Bestellungen und Aktionen an.</p>",
+            "page": ""
+          }
+        },
+        "shipping3": {
+          "type": "collapsible-row",
+          "settings": {
+            "heading": "Kann ich meine Bestellung verfolgen?",
+            "row_content": "<p>Ja, nach dem Versand erhalten Sie eine Sendungsverfolgungsnummer per E-Mail.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "shipping1",
+        "shipping2",
+        "shipping3"
+      ],
+      "settings": {
+        "layout": "container container-inner",
+        "style": "style-3",
+        "preheading": "",
+        "heading": "",
+        "subheading": "<h6>Versand</h6>",
+        "heading_size": "h4",
+        "heading_tag": "h2",
+        "heading_alignment": "text-start",
+        "image_second": false,
+        "image_height": "adapt",
+        "use_custom_colors": false,
+        "color_text": "#000000",
+        "color_background": "#ffffff",
+        "color_background_gradient": "",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 0,
+        "padding_bottom": 30,
+        "custom_id": "",
+        "custom_class": ""
+      }
+    },
+    "collapsible_content_others": {
+      "type": "collapsible-content",
+      "blocks": {
+        "other1": {
+          "type": "collapsible-row",
+          "settings": {
+            "heading": "Wie funktioniert die Rückgabe?",
+            "row_content": "<p>Sie können Artikel innerhalb unserer Rückgabefrist unkompliziert zurücksenden, sofern sie unbenutzt und im Originalzustand sind.</p>",
+            "page": ""
+          }
+        },
+        "other2": {
+          "type": "collapsible-row",
+          "settings": {
+            "heading": "Welche Zahlungsmethoden akzeptieren Sie?",
+            "row_content": "<p>Wir akzeptieren sichere Zahlungsmethoden wie Visa, Mastercard, PayPal, Apple Pay und weitere Optionen.</p>",
+            "page": ""
+          }
+        },
+        "other3": {
+          "type": "collapsible-row",
+          "settings": {
+            "heading": "Sind meine Zahlungsdaten sicher?",
+            "row_content": "<p>Ja, alle Zahlungen werden über sichere und verschlüsselte Systeme verarbeitet.</p>",
+            "page": ""
+          }
+        },
+        "other4": {
+          "type": "collapsible-row",
+          "settings": {
+            "heading": "Wie kann ich den Kundenservice kontaktieren?",
+            "row_content": "<p>Unser Support-Team ist jederzeit per E-Mail erreichbar und hilft Ihnen gerne weiter.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "other1",
+        "other2",
+        "other3",
+        "other4"
+      ],
+      "settings": {
+        "layout": "container container-inner",
+        "style": "style-3",
+        "preheading": "",
+        "heading": "",
+        "subheading": "<h6>Weitere Fragen</h6>",
+        "heading_size": "h4",
+        "heading_tag": "h2",
+        "heading_alignment": "text-start",
+        "image_second": false,
+        "image_height": "adapt",
+        "use_custom_colors": false,
+        "color_text": "#000000",
+        "color_background": "#ffffff",
+        "color_background_gradient": "",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 0,
+        "padding_bottom": 100,
+        "custom_id": "",
+        "custom_class": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "collapsible_content_products",
+    "collapsible_content_shipping",
+    "collapsible_content_others"
+  ]
+}

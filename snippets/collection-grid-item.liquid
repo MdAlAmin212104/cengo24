@@ -1,0 +1,110 @@
+{% comment %}
+  Renders a list of products from a collection
+
+  Accepts:
+  - collection: {Object} Collection Liquid object (required)
+
+  Usage:
+  {% render 'collection-grid-item', collection: collection %}
+{% endcomment %}
+
+{% liquid
+    if b_enable
+        assign collection_image = b_img
+        assign collection_title = b_title
+        assign collection_url = b_url
+    else
+        if collection.image
+            assign collection_image = collection.image
+        elsif collection.products.first and collection.products.first.media != empty
+            assign collection_image = collection.products.first.featured_media.preview_image
+        else
+            assign collection_image = blank
+        endif
+
+        if collection.title == blank
+            assign collection_title = 'onboarding.collection_title' | t
+        else
+            assign collection_title = collection.title
+        endif
+
+        if collection.products == empty
+            assign collection_url = '#'
+        else
+            assign collection_url = collection.url
+        endif
+    endif
+%}
+<div class="collection-grid position-relative {{ style }}{% if b_bg != '' and style == 'style-1' or style == 'style-2' %} p-2{% endif %}{% if style != 'style-3' %} hover-rotate-svg{% else %} card-hover-scale{% endif %}"
+     {% if b_bg != '' and style != 'style-4' %}style="background-color: {{ b_bg }};" {% endif %}>
+    <a class="stretched-link" href="{{ collection_url }}"><span class="visually-hidden">{{ collection_title }}</span></a>
+    <div
+            class="card-image d-block overflow-hidden position-relative text-center"
+    >
+        {% if collection_url %}
+            <a class="full-width-link" aria-label="{{ collection_title }}" href="{{ collection_url }}">
+                <span class="visually-hidden">{{ collection_title }}</span>
+            </a>
+        {% endif %}
+        <div class="position-relative">
+            {% if style == 'style-4' %}
+                <div class="object-fit-contain svg-w-100 z-index--1">
+                    {% if style_shape == 'style-1' %}
+                        <svg width="108" height="108" viewBox="0 0 108 108" fill="{{ b_bg }}"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M96.3001 35.4993C100 18.4993 87.9001 7.09933 70.4001 11.8993C60.9001 -3.50067 44.3001 -3.50069 35.4001 11.4993C18.5001 7.99931 7.20013 19.8993 11.9001 37.0993C-3.29987 46.4993 -3.19988 62.8993 11.6001 71.8993C7.80012 88.8993 19.9001 100.199 37.4001 95.4993C46.9001 110.899 63.5001 110.899 72.4001 95.8993C89.4001 99.3993 100.6 87.4993 95.9001 70.2993C111.1 60.8993 111.1 44.4993 96.3001 35.4993Z"
+                                  fill="{{ b_bg }}"/>
+                        </svg>
+                    {% endif %}
+                    {% if style_shape == 'style-2' %}
+                        <svg width="101" height="91" viewBox="0 0 101 91" fill="{{ b_bg }}"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100.1 45.3C100.1 53.7 90.8998 59.7 86.9998 66.5C82.8998 73.5 82.0998 84.4 75.0998 88.5C68.2998 92.4 58.5998 87.8 50.1998 87.8C41.7998 87.8 31.9998 92.4 25.1998 88.5C18.1998 84.4 17.3998 73.5 13.3998 66.5C9.39981 59.7 0.299805 53.7 0.299805 45.3C0.299805 36.9 9.39981 30.8 13.3998 24C17.3998 17 18.1998 6.10003 25.1998 2.10003C31.9998 -1.79997 41.7998 2.80001 50.1998 2.80001C58.5998 2.80001 68.2998 -1.79997 75.0998 2.10003C82.0998 6.10003 82.8998 17 86.9998 24C90.8998 30.8 100.1 36.9 100.1 45.3Z"
+                                  fill="{{ b_bg }}"/>
+                        </svg>
+                    {% endif %}
+                    {% if style_shape == 'style-3' %}
+                        <svg width="118" height="111" viewBox="0 0 118 111" fill="{{ b_bg }}"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M59.0996 110.1C54.3996 110.1 50.8996 100.7 46.5996 99.7C42.0996 98.6 34.6996 105.3 30.6996 103.2C26.5996 101.1 27.8996 91.2 24.4996 88.2C21.0996 85.2 11.3996 87.4 8.9996 83.6C6.4996 79.8 12.5996 71.9 11.2996 67.5C9.99961 63.2 0.599609 60 0.599609 55.3C0.599609 50.7 9.99961 47.4 11.2996 43.1C12.5996 38.7 6.4996 30.9 8.9996 27.1C11.3996 23.3 21.0996 25.5 24.4996 22.4C27.7996 19.4 26.5996 9.49999 30.6996 7.39999C34.5996 5.29999 41.9996 12 46.4996 10.9C50.8996 9.79999 54.3996 0.5 58.9996 0.5C63.6996 0.5 67.1996 9.79999 71.4996 10.9C76.0996 12 83.3996 5.29999 87.3996 7.39999C91.4996 9.49999 90.1996 19.4 93.5996 22.4C96.9996 25.4 106.7 23.2 109.1 27C111.6 30.8 105.6 38.7 106.9 43C108.2 47.3 117.5 50.6 117.5 55.2C117.5 59.9 108.2 63.2 106.9 67.5C105.6 71.9 111.6 79.7 109.2 83.5C106.7 87.3 97.0996 85.1 93.5996 88.2C90.2996 91.2 91.5996 101 87.4996 103.2C83.4996 105.2 76.0996 98.6 71.5996 99.7C67.2996 100.7 63.7996 110 59.0996 110.1Z"
+                                  fill="{{ b_bg }}"/>
+                        </svg>
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if style != 'style-4' %}
+                {% unless collection_image == '' %}
+                    <div class="card-img-top card-img-custom-height h-ratio-1-1 lh-0{% if enable_shape and style != 'style-1' and style != 'style-2' %} p-2 p-lg-3{% endif %}" {% if b_bg != '' and style == 'style-4' and enable_shape == false %} style="background-color: {{ b_bg }};" {% endif %}>
+                        {% render 'image-sm', image: collection_image, class: image_position %}
+                    </div>
+                {% else %}
+                    {% if collection == empty %}
+                        <div class="card-img-top card-img-custom-height h-ratio-1-1 lh-0{% if enable_shape and style != 'style-1' and style != 'style-2' %} p-2 p-lg-3{% endif %}" {% if b_bg != '' and style == 'style-4' and enable_shape == false %} style="background-color: {{ b_bg }};" {% endif %}>
+                            {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                        </div>
+                    {% else %}
+                        {% render 'image-sm', image: collection_image, class: image_position %}
+                    {% endif %}
+                {% endunless %}
+            {% endif %}
+            {% if style == 'style-4' %}
+                <a href="{{ collection_url }}" class="position-absolute top-50 start-50 translate-middle h5">
+                    {{ collection_title }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    {% if style != 'style-4' %}
+    <div class="card-content py-2{% if style == 'style-1' or style == 'style-2' %} px-3{% endif %}{% if style == 'style-3' %} text-center{% endif %}">
+        <{{ heading_tag }} class="{{ heading_size }}
+        mb-0{% if style == 'style-3' %} text-center{% endif %}">
+        <a href="{{ collection_url }}" class="px-0 d-inline-block hover-underline-1">
+            {{ collection_title }}
+        </a>
+    </{{ heading_tag }}>
+    {% if b_enable == false %}
+        <p class="mb-0 fs-14 d-block">{{ collection.products_count }}+ {{ 'products.product.label' | t }}</p>
+    {% endif %}
+</div>
+{% endif %}
+</div>

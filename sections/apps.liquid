@@ -1,0 +1,85 @@
+{% style %}
+  {% if section.settings.use_custom_colors %}
+    .section-extras-color-{{ section.id }} {
+    --gradient-background: {% if section.settings.color_background_gradient != blank %}{{ section.settings.color_background_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
+    --color-background: {{ section.settings.color_background.red }}, {{ section.settings.color_background.green }}, {{ section.settings.color_background.blue }};
+    --color-foreground: {{ section.settings.color_text.red }}, {{ section.settings.color_text.green }}, {{ section.settings.color_text.blue }};
+    }
+  {% endif %}
+{% endstyle %}
+<div class="{{ section.settings.layout }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}{% if section.settings.use_custom_colors %} section-extras-color section-extras-color-{{ section.id }} {% endif %}">
+  {%- for block in section.blocks -%}
+    {% render block %}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.apps.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+        {
+          "value": "container page-width",
+          "label": "t:sections.all.layout.options__1.label"
+        },
+        {
+          "value": "container container-inner",
+          "label": "t:sections.all.layout.options__2.label"
+        },
+        {
+          "value": "container-fluid",
+          "label": "t:sections.all.layout.options__3.label"
+        },
+        {
+          "value": "full-width",
+          "label": "t:sections.all.layout.options__4.label"
+        }
+      ],
+      "default": "container page-width",
+      "label": "t:sections.all.layout.header"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.color_options.header"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_custom_colors",
+      "default": false,
+      "label": "t:sections.all.color_options.use_custom_colors"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "t:sections.all.color_options.color_text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "t:sections.all.color_options.color_background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color_background",
+      "id": "color_background_gradient",
+      "label": "t:sections.all.color_options.color_background_gradient"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.apps.presets.name"
+    }
+  ]
+}
+{% endschema %}

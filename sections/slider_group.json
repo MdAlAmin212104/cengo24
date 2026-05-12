@@ -1,0 +1,151 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "Slideshow",
+  "type": "custom.Slideshow",
+  "sections": {
+    "slideshow_nbWbcx": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_RcYr7F": {
+          "type": "slide",
+          "settings": {
+            "animation": "animation-right-to-left",
+            "image": "shopify://shop_images/Gemini_Generated_Image_ilmzi5ilmzi5ilmz-Photoroom.png",
+            "preheading": "",
+            "heading": "",
+            "heading2": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "button_link": "shopify://collections/all",
+            "button_style": "primary",
+            "text_box_position": "flex-lg-middle-left",
+            "text_alignment": "text-md-start text-lg-start",
+            "use_custom_colors": true,
+            "color_text": "#000000",
+            "color_background": "",
+            "color_background_gradient": "",
+            "use_overlay": false,
+            "colors_overlay": "#ffffff",
+            "overlay_opacity": 0,
+            "text_box_position_mobile": "flex-middle-left",
+            "text_alignment_mobile": "text-start"
+          }
+        },
+        "slide_NkXHtj": {
+          "type": "slide",
+          "settings": {
+            "animation": "animation-right-to-left",
+            "image": "shopify://shop_images/ChatGPT_Image_May_11_2026_10_59_49_AM_1.png",
+            "preheading": "",
+            "heading": "",
+            "heading2": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "button_link": "shopify://collections/all",
+            "button_style": "primary",
+            "text_box_position": "flex-lg-middle-left",
+            "text_alignment": "text-md-start text-lg-start",
+            "use_custom_colors": true,
+            "color_text": "#000000",
+            "color_background": "",
+            "color_background_gradient": "",
+            "use_overlay": false,
+            "colors_overlay": "#ffffff",
+            "overlay_opacity": 0.3,
+            "text_box_position_mobile": "flex-middle-left",
+            "text_alignment_mobile": "text-start"
+          }
+        }
+      },
+      "block_order": [
+        "slide_RcYr7F",
+        "slide_NkXHtj"
+      ],
+      "name": "t:sections.slideshow.presets.name",
+      "settings": {
+        "layout": "full-width",
+        "style_layout": "none-style-layout",
+        "style_text": "none-style-text",
+        "image_height": "adapt",
+        "max_width": 600,
+        "style_slider": "slide-dark",
+        "enable_navigation": true,
+        "navigation_position": "center",
+        "navigation_icon": "style-1",
+        "enable_pagination": true,
+        "slider_visual": "bullets",
+        "auto_rotate": true,
+        "change_slides_speed": 5,
+        "loop": false,
+        "heading_tag": "h2",
+        "image_height_mobile": "mb-adapt",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "custom_id": "",
+        "custom_class": ""
+      }
+    },
+    "marque_84CHyn": {
+      "type": "marque",
+      "blocks": {
+        "marque_JJ6ARa": {
+          "type": "marque",
+          "settings": {
+            "content": "<p>Orthopädische Schlafprodukte für gesunden Schlaf</p>",
+            "link": "shopify://collections/all"
+          }
+        },
+        "marque_LN7geA": {
+          "type": "marque",
+          "settings": {
+            "content": "<p>Unterstützt Nacken und Rücken für einen entspannten Schlaf</p>",
+            "link": "shopify://collections/all"
+          }
+        },
+        "marque_qymr9y": {
+          "type": "marque",
+          "settings": {
+            "content": "<p>Orthopedic sleeping comfort every night</p>",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "marque_JJ6ARa",
+        "marque_LN7geA",
+        "marque_qymr9y"
+      ],
+      "settings": {
+        "layout": "container page-width",
+        "time": 30,
+        "reverse": false,
+        "label_font_size": "h5",
+        "height_image": "icon-h-medium",
+        "use_custom_colors": true,
+        "color_text": "#ffffff",
+        "color_background": "#5ba2e1",
+        "color_background_gradient": "",
+        "margin_top": 0,
+        "margin_bottom": 40,
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "custom_id": "",
+        "custom_class": ""
+      }
+    }
+  },
+  "order": [
+    "slideshow_nbWbcx",
+    "marque_84CHyn"
+  ]
+}

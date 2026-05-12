@@ -1,0 +1,30 @@
+{% if settings.enable_suggest %}
+    <div class="shopify-section">
+        {% if settings.title_collection_suggest != null %}
+            <h3 class="my-3 fs-16">{{ settings.title_collection_suggest }}</h3>
+        {% endif %}
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                {% for product in settings.collection_suggest.products limit: 6 %}
+                    <div class="clearfix">
+                        {% render 'card-product-list-small',
+                                card_product: product,
+                                section_id: product.id,
+                                image_height: 'adapt',
+                                show_quick_add: false,
+                                show_secondary_image: true
+                        %}
+                    </div>
+                {%- endfor -%}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+{% endif %}
+
+
+
+
+
+

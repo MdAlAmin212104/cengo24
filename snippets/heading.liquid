@@ -1,0 +1,45 @@
+{% if preheading or heading or subheading %}
+<div class="heading-wrap {{ class }} {{ heading_alignment_mobile }} {{ heading_alignment }} {{ style_text }}">
+
+    {% if icon != blank %}
+        <div class="mb-1 icon-heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--zigzag{% endif %}">
+            {% render 'image-sm',
+                    image: icon
+            %}
+        </div>
+    {% endif %}
+    {% if preheading != blank %}
+        <p class="sub-1 preheading">
+            {{ preheading }}
+        </p>
+    {% endif %}
+    {% if heading %}
+        <{{ heading_tag }} class="sub-2 heading mb-0 {{ heading_size }}">
+        {{ heading }}
+        {% if heading_2 != blank %}
+            <br>{{ heading_2 }}
+        {% endif %}
+        </{{ heading_tag }}>
+    {% endif %}
+
+    {% if subheading != blank %}
+        <div class="sub-3 subheading rte mb-0 mt-2 opacity-85 {{ subheading_class }}">
+            {{ subheading }}
+        </div>
+    {% endif %}
+    {% if button_link and button_label != '' %}
+        <div class="sub-4 card-bottom mt-3">
+            <a
+                    {% if button_link == blank %}
+                        role="link" aria-disabled="true"
+                    {% else %}
+                        href="{{ button_link }}"
+                    {% endif %}
+                    class="btn btn-{{ button_style }} position-relative z-index-1"
+            >
+                <span>{{- button_label | escape -}}</span>
+            </a>
+        </div>
+    {% endif %}
+    </div>
+{% endif %}

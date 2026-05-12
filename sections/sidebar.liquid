@@ -1,0 +1,268 @@
+<div class="sidebar-wrap">
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when 'menu' %}
+                <div class="navbar-nav-canvas mb-2 bg-white p-3 border shadow-sm">
+                    {% render 'site-nav-sub', linklist: block.settings.main_linklist %}
+                </div>
+            {% when 'image' %}
+                <div class="mb-2 bg-white p-3 border shadow-sm position-relative">
+                    {% if block.settings.label_link %}
+                        <a class="full-width-link" aria-label="{{ block.settings.label_link }}" href="{{ block.settings.label_link }}">
+                            <span class="visually-hidden">{{ block.settings.label_link }}</span>
+                        </a>
+                    {% endif %}
+                    {% if block.settings.image != blank %}
+                        <div class="media-wrap">
+                            {% render 'image-sm', lazyload: true, image: block.settings.image, class: 'w-100' %}
+                        </div>
+                    {% else %}
+                        <div class="media-wrap">
+                            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg bg-body-tertiary' }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% when 'socials' %}
+                <div class="mb-2 bg-white p-3 border shadow-sm">
+                    {% if block.settings.heading != '' %}
+                        <h3 class="fs-20">{{ block.settings.heading }}</h3>
+                    {% endif %}
+                    {%- render 'social-icons', class: 'footer__list-social' -%}
+                </div>
+            {% when 'products' %}
+                <div class="mb-2 bg-white p-3 border shadow-sm">
+                    {% if block.settings.heading != '' %}
+                        <h3 class="fs-20">{{ block.settings.heading }}</h3>
+                    {% endif %}
+                    {% for product in block.settings.collection.products limit: block.settings.products_to_show %}
+                        <div class="border-bottom mb-2">
+                            {% render 'product-card-list-small',
+                                    product: product
+                            %}
+                        </div>
+
+                    {% endfor %}
+                </div>
+            {% when 'newsletter' %}
+                <div class="mb-2 bg-white p-3 border shadow-sm">
+                    {% if block.settings.heading != '' %}
+                        <h3 class="fs-20">{{ block.settings.heading }}</h3>
+                    {% endif %}
+                    {% if block.settings.subheading != '' %}
+                        <div class="rte rte-inline mb-3">
+                            {{ block.settings.subheading }}
+                        </div>
+                    {% endif %}
+                    {% form 'customer', class: 'newsletter-form' %}
+                        <input type="hidden" name="contact[tags]" value="newsletter">
+                        <div
+                                class="newsletter-form__field-wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                                {% if settings.animations_reveal_on_scroll %}
+                                    data-cascade
+                                    style="--animation-order: {{ forloop.index }};"
+                                {% endif %}
+                        >
+                            <div class="input-group">
+                                <label for="NewsletterForm--{{ section.id }}" class="visually-hidden">
+                                    {{ 'newsletter.label' | t }}
+                                </label>
+                                <input
+                                        id="NewsletterForm--{{ section.id }}"
+                                        type="email"
+                                        name="contact[email]"
+                                        class="field__input form-control input-group__field mb-0"
+                                        value="{{ form.email }}"
+                                        aria-required="true"
+                                        autocorrect="off"
+                                        autocapitalize="off"
+                                        autocomplete="email"
+                                        {% if form.errors %}
+                                            autofocus
+                                            aria-invalid="true"
+                                            aria-describedby="Newsletter-error--{{ section.id }}"
+                                        {% elsif form.posted_successfully? %}
+                                            aria-describedby="Newsletter-success--{{ section.id }}"
+                                        {% endif %}
+                                        placeholder="{{ 'newsletter.label' | t }}"
+                                        required
+                                >
+                                <button
+                                        type="submit"
+                                        class="newsletter-form__button btn btn-primary input-group__btn z-index-10 mw-auto"
+                                        name="commit"
+                                        id="Subscribe"
+                                        aria-label="{{ 'newsletter.button_label' | t }}"
+                                >
+                                    <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <small id="Newsletter-desc--{{ section.id }}" class="visually-hidden">
+                                {{ 'newsletter.button_label' | t }}
+                            </small>
+                            {%- if form.errors -%}
+                                <small class="newsletter-form__message form__message"
+                                       id="Newsletter-error--{{ section.id }}">
+                          <span class="svg-wrapper">
+                            <i class="bi bi-exclamation-circle"></i>
+                          </span>
+                                    {{- form.errors.translated_fields.email | capitalize }}
+                                    {{ form.errors.messages.email -}}
+                                </small>
+                            {%- endif -%}
+                        </div>
+                        {%- if form.posted_successfully? -%}
+                            <h3
+                                    class="newsletter-form__message newsletter-form__message--success form__message fs-16 text-primary mt-3"
+                                    id="Newsletter-success--{{ section.id }}"
+                                    tabindex="-1"
+                                    autofocus
+                            >
+                  <span class="svg-wrapper">
+                   <i class="bi bi-check2-circle"></i>
+                  </span>
+                                {{- 'newsletter.success' | t }}
+                            </h3>
+                        {%- endif -%}
+                    {% endform %}
+                </div>
+            {% when 'info' %}
+                <div class="mb-2 bg-white p-3 border shadow-sm">
+                    {% if block.settings.heading != '' %}
+                        <h3 class="fs-20">{{ block.settings.heading }}</h3>
+                    {% endif %}
+                    {% if block.settings.content != blank %}
+                        <div class="rte rte-custom">
+                            {{ block.settings.content }}
+                        </div>
+                    {% endif %}
+                </div>
+        {% endcase %}
+    {% endfor %}
+</div>
+{% schema %}
+{
+  "name": "t:sections.sidebar.name",
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "t:sections.sidebar.blocks.menu.label",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "main_linklist",
+          "label": "t:sections.header.settings.main_linklist.label"
+        }
+      ]
+    },
+    {
+      "type": "products",
+      "name": "t:sections.sidebar.blocks.products.label",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.all.heading.label",
+          "default": "Bestseller"
+        },
+        {
+          "id": "collection",
+          "type": "collection",
+          "label": "t:sections.featured-collection.settings.collection.label"
+        },
+        {
+          "type": "range",
+          "id": "products_to_show",
+          "min": 2,
+          "max": 40,
+          "step": 1,
+          "default": 5,
+          "label": "t:sections.featured-collection.settings.products_to_show.label"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "t:sections.sidebar.blocks.newsletter.label",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.all.heading.label",
+          "default": "Newsletter"
+        },
+        {
+          "type": "richtext",
+          "id": "subheading",
+          "label": "t:sections.all.heading.subheading",
+          "default": "<p>Join our newsletter for the latest updates, expert insights, and exclusive offers</p>"
+        }
+      ]
+    },
+    {
+      "type": "socials",
+      "name": "t:sections.sidebar.blocks.socials.label",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.all.heading.label",
+          "default": "Stay in touch"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "t:sections.sidebar.blocks.image.label",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.all.image.label"
+        },
+        {
+          "type": "url",
+          "id": "label_link",
+          "default": "/collections/all",
+          "label": "t:sections.all.image.label_link"
+        }
+      ]
+    },
+    {
+      "type": "info",
+      "name": "t:sections.sidebar.blocks.information.label",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.all.heading.label",
+          "default": "Information"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:sections.all.heading.content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.sidebar.presets.name",
+      "blocks": [
+        {
+          "type": "menu"
+        },
+        {
+          "type": "socials"
+        },
+        {
+          "type": "newsletter"
+        },
+        {
+          "type": "products"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

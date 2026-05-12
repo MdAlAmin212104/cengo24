@@ -1,0 +1,43 @@
+<div class="cs-card blog-card grid-v1 position-relative h-100 d-flex flex-column {{ class }}">
+  <div class="blog-card-top position-relative overflow-hidden">
+    {% if article.image %}
+      <div class="card-img-top hover-style-v2 lh-0 d-block{% if image_height == 'adapt' %} card-adapt{% else %} card-img-custom-height {{ image_height }} {% endif %}">
+        <a class="full-width-link" href="{{ article.url }}" aria-label="{{ article.title }}">
+          <span class="visually-hidden">{{ article.title }}</span>
+        </a>
+        {% render 'image', image: article.image %}
+      </div>
+      <noscript>
+        <div class="article__grid-image-wrapper position-relative">
+          <a class="full-width-link" href="{{ article.url }}" aria-label="{{ article.title }}">
+            <span class="visually-hidden">{{ article.title }}</span>
+          </a>
+          {% render 'image', image: article.image %}
+        </div>
+      </noscript>
+    {% endif %}
+  </div>
+  <div class="cs-card-body pt-3">
+    <div class="clearfix">
+      {% if blog_show_date %}
+      <div class="d-flex align-items-center flex-wrap fs-14 text-uppercase fw-bold">
+        <a href="{{ blog_url }}" class="mb-2" aria-label="{{ blog_title }}">{{ blog_title }}</a>
+          <span class="mx-2 mb-2 opacity-85">|</span>
+          <p class="mb-2">{{ article.published_at | time_tag: format: 'date' }}</p>
+      </div>
+      {% endif %}
+      <h3 class="{{ title_size }} mb-0">
+        <a href="{{ article.url }}" aria-label="{{ article.title }}">{{ article.title }}</a>
+      </h3>
+      {% if blog_show_excerpt %}
+        <div class="rte mt-2 rte-inline opacity-85 fs-18">
+          {% if article.excerpt.size > 0 %}
+            {{ article.excerpt }}
+          {% else %}
+            {{ article.content | strip_html | truncate: 110 }}
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

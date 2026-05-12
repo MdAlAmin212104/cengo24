@@ -1,0 +1,57 @@
+<div class="cs-card blog-card position-relative {{ class }}">
+  <div class="row align-items-center">
+    {% if article.image %}
+      <div class="col-12 col-md-6">
+        <div class="blog-card-top hover-style-v2 overflow-hidden position-relative">
+          <a class="full-width-link" href="{{ article.url }}" aria-label="{{ article.title }}">
+            <span class="visually-hidden">{{ article.title }}</span>
+          </a>
+          <div class="card-img-top lh-0 d-block mb-3 mb-md-0 overflow-hidden{% if image_height == 'adapt' %} card-adapt{% else %} card-img-custom-height {{ image_height }} {% endif %}">
+            {% render 'image', image: article.image %}
+          </div>
+          <noscript>
+            <div class="article__grid-image-wrapper">
+              {% render 'image', image: article.image %}
+            </div>
+          </noscript>
+        </div>
+      </div>
+    {% endif %}
+    <div class="col-12 {% if article.image %}col-md-6{% endif %}">
+      <div class="cs-card-body px-0 py-3 px-md-3 d-flex flex-column justify-content-between flex-1">
+        <div class="clearfix">
+          <div class="d-flex align-items-center flex-wrap fs-16 text-uppercase">
+            <a href="{{ blog_url }}" class="mb-2" aria-label="{{ blog_title }}">{{ blog_title }}</a>
+            {% if blog_show_date %}
+              <span class="ms-2 me-2 mb-2 opacity-85">|</span>
+              <p class="mb-2">{{ article.published_at | time_tag: format: 'date' }}</p>
+            {% endif %}
+          </div>
+          <h3 class="pe-0 pe-xl-5 {{ title_size }} mb-0">
+            <a href="{{ article.url }}" aria-label="{{ article.title }}">{{ article.title }}</a>
+          </h3>
+          {% if blog_show_excerpt %}
+            <div class="pe-0 pe-xl-5 rte rte-inline mt-3">
+              {% if article.excerpt.size > 0 %}
+                {{ article.excerpt }}
+              {% else %}
+                {{ article.content | strip_html | truncate: 150 }}
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if blog.comments_enabled? and article.comments_count > 0 and blog_show_comment %}
+            <p>
+              <a
+                href="{{ article.url }}#comments"
+                class="article__comment-count btn button-sm btn-{{ button_style }}" aria-label="{{ article.title }}"
+              >
+                {{ 'blogs.article.comments' | t: count: article.comments_count }}
+              </a>
+            </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

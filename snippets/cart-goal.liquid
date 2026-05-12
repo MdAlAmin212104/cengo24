@@ -1,0 +1,75 @@
+{% if cart != empty %}
+  {% liquid
+    assign goal_value_with_cents = settings.cart_goal_value | times: 100
+    assign pre_goal_message = settings.cart_pre_goal_message
+    assign post_goal_message = settings.cart_post_goal_message
+
+    if cart.total_price < goal_value_with_cents
+      assign percentage = cart.total_price | divided_by: settings.cart_goal_value
+      assign goal_remaining_money = goal_value_with_cents | minus: cart.total_price | money
+      assign description = settings.cart_pre_goal_message | strip_html | replace: '[remaining_amount]', goal_remaining_money
+    else
+      assign percentage = 100
+      assign description = settings.cart_post_goal_message | strip_html
+    endif
+  %}
+
+  <div data-cart-goal
+       class="cart-progress-wrapper {% if percentage == 100 %}full{% else %}not-full{% endif %}"
+       data-threshold="{{ goal_value_with_cents }}"
+       data-pre-goal-message-template="{{ pre_goal_message | strip_html }}"
+       data-post-goal-message="{{ post_goal_message | strip_html }}"
+       data-money-format="{{ shop.money_format | escape }}"
+  >
+    <h3 class="goal-message">
+      {{ description }}
+    </h3>
+    {% comment %} <div class="cart-progress-bar-container position-relative">
+
+      <div data-progress-bar
+           role="progressbar"
+           aria-label="Cart progress bar"
+           aria-valuenow="{{ percentage }}"
+           aria-valuemin="0"
+           aria-valuemax="100"
+           class="cart-progress-bar"
+           style="width: {{ percentage }}%;">
+
+      </div>
+      <div class="cart-goal-icon position-absolute top-50 translate-middle-y" style="right: 0%;">
+        <span class="badge rounded-pill bg-primary-custom"><i class="bi bi-truck fs-16"></i></span>
+      </div>
+    </div> {% endcomment %}
+  </div>
+{% endif %}
+
+<style>
+  .cart-progress-wrapper .cart-progress-bar-container {
+    width: 100%;
+    background-color: #eee;
+    border-radius: 8px;
+    margin: 2px auto;
+    padding: 1px;
+  }
+
+  .cart-progress-wrapper .cart-progress-bar {
+    display: block;
+    height: 4px;
+    background-color: var(--progress-bar-color, {{ settings.cart_progress_bar_color }}); /* Default color */
+    border-radius: 2px;
+    transition: width 0.5s ease-in-out;
+    border: 1px solid var(--progress-bar-border-color, {{ settings.cart_progress_bar_color }});
+    box-sizing: border-box;
+  }
+
+  .cart-progress-wrapper.full .cart-progress-bar {
+    --progress-bar-color: {{ settings.cart_progress_bar_full_color }};
+    --progress-bar-border-color: {{ settings.cart_progress_bar_full_color }};
+  }
+
+  .cart-progress-wrapper .goal-message {
+    margin: 2px auto 8px;
+    font-size: 14px;
+    color: {{ settings.cart_progress_bar_text_color }};
+  }
+</style>

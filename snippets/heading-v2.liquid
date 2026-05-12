@@ -1,0 +1,42 @@
+{% if preheading or heading or subheading %}
+    <div class="heading-wrap {{ class }} {{ heading_alignment_mobile }} {{ heading_alignment }}">
+        <div class="d-flex flex-wrap justify-content-between">
+            <div class="clearfix">
+                {% if preheading != blank %}
+                    <p class="sub-1 preheading">
+                        {{ preheading }}
+                    </p>
+                {% endif %}
+                {% if heading %}
+                    {% render 'h-heading',
+                            heading_tag: section.settings.heading_tag,
+                            heading_size: section.settings.heading_size,
+                            heading: section.settings.heading
+                    %}
+            {% endif %}
+            {% if subheading != blank %}
+                <div class="sub-3 subheading rte mb-0 mt-2 {{ subheading_class }}">
+                    {{ subheading }}
+                </div>
+            {% endif %}
+        </div>
+
+            {% if button_link and button_label != '' %}
+                <div class="sub-4 card-bottom mt-3">
+                    <a
+                            {% if button_link == blank %}
+                                role="link" aria-disabled="true"
+                            {% else %}
+                                href="{{ button_link }}"
+                            {% endif %}
+                            class="btn btn-{{ button_style }} position-relative z-index-1"
+                    >
+                        <span>{{- button_label | escape -}}</span>
+                    </a>
+                </div>
+            {% endif %}
+    </div>
+    </div>
+{% endif %}
+
+

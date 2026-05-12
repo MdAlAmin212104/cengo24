@@ -1,0 +1,38 @@
+{% comment %}
+  Shopify Wishlist
+  Usage:
+    - Replace the snippet name ('card-product') with your existing product card snippet
+    - Pass the product object as a snippet variable named 'product'
+{% endcomment %}
+<div class="card-wrapper card-product w-100 h-100">
+    {% render 'card-product',
+            card_product: product,
+            section_id: section.id,
+            image_position: 'object_position_middle_center',
+            image_height: 'adapt',
+            show_quick_add: false,
+            show_secondary_image: false,
+            style_product: 'style-1'
+    %}
+</div>
+
+
+{% schema %}
+{
+  "name": "Product Card",
+  "tag": "section",
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "settings": [],
+  "presets": [
+    {
+      "name": "Default"
+    }
+  ]
+}
+{% endschema %}
+

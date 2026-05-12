@@ -1,0 +1,36 @@
+<div class="cs-card blog-card-v1 position-relative h-100 d-flex flex-column {{ class }}">
+  <div class="blog-card-top position-relative">
+    {% if article.image %}
+      <div class="card-img-top card-hover-overlay-dark lh-0 d-block overflow-hidden {% if overlay %}card-overlay{% endif %} {% if image_height == 'adapt' %} card-adapt{% else %} card-img-custom-height {{ image_height }} {% endif %}">
+        <a class="full-width-link" href="{{ article.url }}" aria-label="{{ article.title }}">
+          <span class="visually-hidden">{{ article.title }}</span>
+        </a>
+        {% render 'image', image: article.image %}
+      </div>
+      <noscript>
+        <div class="article__grid-image-wrapper position-relative">
+          <a class="full-width-link" href="{{ article.url }}" aria-label="{{ article.title }}">
+            <span class="visually-hidden">{{ article.title }}</span>
+          </a>
+            {% render 'image', image: article.image %}
+        </div>
+      </noscript>
+    {% endif %}
+  </div>
+  <div class="cs-card-body z-index-10 position-absolute bottom-0 start-0 end-0 p-4">
+    {% if blog_show_cat or blog_show_date %}
+      <div class="d-flex align-items-center flex-wrap fs-14 fw-bold">
+        {% if blog_show_cat %}
+          <a href="{{ blog_url }}" aria-label="{{ blog_url }}" class="mb-1 fs-14">{{ blog_title }}</a>
+        {% endif %}
+        {% if blog_show_date %}
+          <span class="ms-1 me-1 mb-1 fs-14">/</span>
+          <p class="mb-1 fs-16">{{ article.published_at | time_tag: format: 'date' }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+    <h3 class="{{ title_size }} mb-0">
+      <a href="{{ article.url }}" aria-label="{{ article.title }}">{{ article.title }}</a>
+    </h3>
+  </div>
+</div>

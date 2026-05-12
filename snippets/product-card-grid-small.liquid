@@ -1,0 +1,38 @@
+{% comment %}
+  Renders a product card using "Grid" style
+  Accepts:
+  - max_height: {Number} Maximum height of the product's image (required)
+  - product: {Object} Product Liquid object (required)
+  - show_vendor: {Boolean} Show the product's vendor depending on the section setting (optional)
+
+  Usage:
+  {% render 'product-card-grid-small',
+                            product: product,
+                            image_position: image_position,
+                            image_height: image_height,
+                            show_quick_add: enable_quick_add,
+                            button_style: button_style
+                    %}
+{% endcomment %}
+{% assign first_available_variant = product.selected_or_first_available_variant %}
+<div class="col d-flex justify-content-between flex-column mb-2">
+  <div class="{% unless first_available_variant.available %} product-card-sold-out{% endunless %} product-card product-card-sm position-relative h-100">
+    <div class="mb-3 overflow-hidden position-relative text-center">
+      <a class="full-width-link" aria-label="{{ product.title }}" href="{{ product.url }}">
+        <span class="visually-hidden">{{ product.title }}</span>
+      </a>
+      {% if product.featured_media != blank %}
+      <div class="card-img-top hover-secondary-image style-hover-1 card-adapt{% if settings.show_border %} settings-card{% endif %}">
+        {% render 'image', image: product.featured_media, class: image_position %}
+      </div>
+      {% endif %}
+      <div class="position-absolute top-0 start-0 m-2">
+        {% render 'product-badge', product: product %}
+      </div>
+    </div>
+    <div class="card-content text-center px-1 px-lg-2 pb-2">
+      <h3 class="card-product-title d-none d-md-none d-lg-block fs-12-767 fs-16 mb-0" aria-hidden="true">{{ product.title }}</h3>
+        {% render 'price', product: product, style: 'small' %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+{% comment %}
+  Renders a product card using "Grid" style
+  Accepts:
+  - max_height: {Number} Maximum height of the product's image (required)
+  - product: {Object} Product Liquid object (required)
+  - show_vendor: {Boolean} Show the product's vendor depending on the section setting (optional)
+
+  Usage:
+  {% render 'product-card-grid-small',
+                            product: product,
+                            image_position: image_position,
+                            image_height: image_height,
+                            show_quick_add: enable_quick_add,
+                            button_style: button_style
+                    %}
+{% endcomment %}
+{% assign first_available_variant = product.selected_or_first_available_variant %}
+<div class="col d-flex justify-content-between flex-column mb-2">
+  <div class="{% unless first_available_variant.available %} product-card-sold-out{% endunless %} product-card-sm position-relative h-100">
+    <div class="row d-flex align-items-center gx-2">
+      <div class="col-4 position-relative">
+        <a class="full-width-link" aria-label="{{ product.title }}" href="{{ product.url }}">
+          <span class="visually-hidden">{{ product.title }}</span>
+        </a>
+        {% if product.featured_media != blank %}
+          <div class="card-img-top card-adapt style-hover-v1">
+            {% render 'image-sm', image: product.featured_media, class: image_position %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="col-8">
+        <div class="card-content px-1 px-lg-2 pb-2">
+          {% if settings.enable_rating_badge_stars and product.metafields.judgeme.badge != '' %}
+            <div class="star-wrap fs-12">
+              <!-- Start of Judge.me code -->
+              <div class='jdgm-widget jdgm-preview-badge'>
+                {{ product.metafields.judgeme.badge }}
+              </div>
+              <!-- End of Judge.me code -->
+            </div>
+          {% endif %}
+          <h3 class="card-product-title fs-14 mb-1" aria-hidden="true">{{ product.title }}</h3>
+          <div class="d-flex flex-wrap">
+            <div class="me-1">
+              {% render 'price', product: product, style: 'small' %}
+            </div>
+            {% render 'product-badge', product: product %}
+          </div>
+
+          <a class="underline-anm underline-anm-1 fs-12 mt-2" href="{{ product.url }}">{{ 'products.product.view_full_details' | t }} <i class="bi bi-arrow-right ms-1"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

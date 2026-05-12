@@ -1,0 +1,153 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "layout_container": "container page-width",
+        "style": "style-1",
+        "show_collection_image": true,
+        "show_collection_description": true,
+        "products_per_page": 16,
+        "columns_desktop": 4,
+        "columns_tablet": 3,
+        "columns_mobile": 2,
+        "gutter": 3,
+        "pagination": "click",
+        "image_height": "adapt",
+        "image_position": "object_position_middle_center",
+        "show_secondary_image": true,
+        "enable_quick_add": true,
+        "show_variant_image": true,
+        "show_border": true,
+        "color_border": "#eaddf7",
+        "border_radius": 5,
+        "border_width": 1,
+        "border_style": "dashed",
+        "enable_collection_list": false,
+        "collection_list": [],
+        "enable_filtering": true,
+        "filter_type": "vertical",
+        "enable_sorting": true,
+        "open_dropdown": true,
+        "limit_height": true,
+        "margin_top": 0,
+        "margin_bottom": 70,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_id": "",
+        "custom_class": ""
+      }
+    },
+    "hr_d3rqg8": {
+      "type": "hr",
+      "name": "t:sections.hr.presets.name",
+      "settings": {
+        "layout": "full-width",
+        "content": "",
+        "style": "style-1",
+        "color_background": "#eaddf7",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "icon_with_text_erXe3x": {
+      "type": "icon-with-text",
+      "blocks": {
+        "card_icon_PmxPFY": {
+          "type": "card-icon",
+          "settings": {
+            "icon": "bi-credit-card",
+            "enable_svg": false,
+            "svg": "",
+            "heading": "Secure Payment",
+            "subheading": "<p>Multiple payment methods with full encryption for your safety.</p>",
+            "button_link": "shopify://collections/all"
+          }
+        },
+        "card_icon_GLBkdM": {
+          "type": "card-icon",
+          "settings": {
+            "icon": "bi bi-truck",
+            "enable_svg": false,
+            "svg": "",
+            "heading": "Fast Delivery",
+            "subheading": "<p>Nationwide delivery with trusted logistics partners.</p>",
+            "button_link": "shopify://collections/all"
+          }
+        },
+        "card_icon_TbwBEp": {
+          "type": "card-icon",
+          "settings": {
+            "icon": "bi bi-arrow-repeat",
+            "enable_svg": true,
+            "svg": "",
+            "heading": "Easy Return",
+            "subheading": "<p>Return or exchange within 7-14 days, no questions asked.</p>",
+            "button_link": "shopify://collections/all"
+          }
+        },
+        "card_icon_JLDd8K": {
+          "type": "card-icon",
+          "disabled": true,
+          "settings": {
+            "icon": "bi-telephone-inbound",
+            "enable_svg": false,
+            "svg": "",
+            "heading": "24/7 Support",
+            "subheading": "<p>We're always here to help via phone, email, or chat.</p>",
+            "button_link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "card_icon_PmxPFY",
+        "card_icon_GLBkdM",
+        "card_icon_TbwBEp",
+        "card_icon_JLDd8K"
+      ],
+      "settings": {
+        "layout": "container container-inner",
+        "preheading": "",
+        "heading": "",
+        "subheading": "",
+        "heading_tag": "h2",
+        "heading_size": "h2",
+        "heading_alignment": "text-center",
+        "show_read_more": false,
+        "button_label": "Buy it now",
+        "button_link": "shopify://collections/all",
+        "button_style": "primary",
+        "columns_desktop": 3,
+        "columns_tablet": 2,
+        "columns_mobile": "1",
+        "gutter": 4,
+        "use_custom_colors": false,
+        "color_text": "#000000",
+        "color_background": "#ffffff",
+        "color_background_gradient": "",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 40,
+        "padding_bottom": 36,
+        "custom_id": "",
+        "custom_class": ""
+      }
+    }
+  },
+  "order": [
+    "product-grid",
+    "hr_d3rqg8",
+    "icon_with_text_erXe3x"
+  ]
+}

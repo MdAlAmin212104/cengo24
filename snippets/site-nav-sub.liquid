@@ -1,0 +1,102 @@
+{% comment %}
+    Renders a list of menu items
+    Accepts:
+    - linklist: {Object} Linklist Liquid object (required)
+    - wrapper_class: {String} CSS wrapper class for the navigation (optional)
+
+    Usage:
+    {% render 'site-nav', linklist: section.settings.main_linklist, wrapper_class: 'site-nav--centered' %}
+{% endcomment %}
+<div class="accordion accordion-custom" id="accordionMenu-{{ linklist }}">
+
+    {% for link in linklists[linklist].links %}
+
+        {% comment %}
+          Check if third-level nav exists on each parent link.
+        {% endcomment %}
+        {% liquid
+            assign three_level_nav = false
+            if link.links != blank
+                if link.levels == 2
+                    assign three_level_nav = true
+                endif
+            endif
+        %}
+        {% if link.links != blank %}
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-{{ link.url }}" aria-expanded="true" aria-controls="panelsStayOpen-collapse-{{ link.url }}">
+                        {{ link.title | escape }}
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapse-{{ link.url }}" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        {% if three_level_nav %}
+                            <ul class="site-nav__childlist-grid">
+                                {% if link.links != blank %}
+                                    {% for childlink in link.links %}
+                                        <li class="site-nav__childlist-item">
+                                            <div class="site-nav__item">
+                                                <div class="item-link">
+                                                    <a href="{{ childlink.url }}"
+                                                       class="site-nav__link site-nav__child-link {% if childlink.links != blank %}site-nav__child-link--parent{% endif %}"
+                                                            {% if childlink.current %} aria-current="page"{% endif %}
+                                                    >
+                                                        <span class="site-nav__label">{{ childlink.title | escape }}</span>
+                                                    </a>
+                                                    {% if childlink.links != blank %}<i
+                                                            class="bi bi-chevron-down fs-16"></i>{% endif %}
+
+                                                </div>
+                                                {% if childlink.links != blank %}
+                                                    <ul>
+                                                        {% for grandchildlink in childlink.links %}
+                                                            <li>
+                                                                <a href="{{ grandchildlink.url }}"
+                                                                   class="site-nav__link site-nav__child-link"
+                                                                        {% if grandchildlink.current %} aria-current="page"{% endif %}
+                                                                >
+                                                                    <span class="site-nav__label">{{ grandchildlink.title | escape }}</span>
+                                                                </a>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+
+                                                {% endif %}
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                        {% else %}
+                            <ul>
+                                {% for childlink in link.links %}
+                                    <li>
+                                        <a href="{{ childlink.url }}"
+                                           class="site-nav__link site-nav__child-link{% if forloop.last %} site-nav__link--last{% endif %}"
+                                                {% if childlink.current %} aria-current="page"{% endif %}
+                                        >
+                                            <span class="site-nav__label">{{ childlink.title | escape }}</span>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                        <a href="{{ link.url }}"
+                           class="accordion-button no-icon{% if link.active %} site-nav__link--active{% endif %}"
+                                {% if link.current %} aria-current="page"{% endif %}
+                        >
+                            <span class="site-nav__label">{{ link.title | escape }}</span>
+                        </a>
+                </h2>
+            </div>
+
+        {% endif %}
+    {% endfor %}
+</div>

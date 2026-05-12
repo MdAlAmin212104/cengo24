@@ -1,0 +1,17 @@
+{% assign first_available_variant = product.selected_or_first_available_variant %}
+{% if first_available_variant.available == false or product.compare_at_price > product.price and first_available_variant.available %}
+    <div class="price__badges lh-1 price__badges--listing d-inline-block">
+        {% if first_available_variant.available == false %}
+            <span class="price__badge price__badge--sold-out d-block">
+        {{ 'products.product.sold_out' | t }}
+      </span>
+        {% elsif product.compare_at_price > product.price and first_available_variant.available %}
+            {% assign discount = product.compare_at_price | minus: product.price %}
+            {% assign discount_percentage = discount | times: 100 | divided_by: product.compare_at_price %}
+                     <span class="price__badge price__badge_sale">
+                         <span class="save-text">{{ 'products.product.save' | t }}</span>
+                         -{{ discount_percentage | round }}%
+                     </span>
+        {% endif %}
+    </div>
+{% endif %}

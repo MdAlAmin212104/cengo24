@@ -1,0 +1,25 @@
+{% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
+<img
+        src="{{ image | image_url: width: 1920 }}"
+        srcset="
+    {%- if image.width >= 360 -%}{{ image | image_url: width: 360 }} 360w,{%- endif -%}
+    {%- if image.width >= 720 -%}{{ image | image_url: width: 720 }} 720w,{%- endif -%}
+    {%- if image.width >= 1080 -%}{{ image | image_url: width: 1080 }} 1080w,{%- endif -%}
+    {%- if image.width >= 1440 -%}{{ image | image_url: width: 1440 }} 1440w,{%- endif -%}
+    {%- if image.width >= 1920 -%}{{ image | image_url: width: 1920 }} 1920w,{%- endif -%}
+    {%- if image.width >= 2880 -%}{{ image | image_url: width: 2880 }} 2880w,{%- endif -%}
+  "
+        sizes="100vw"
+        alt="{{ image.alt | escape }}"
+        class="w-100 {{ class }}"
+        width="{{ image.width }}"
+        height="{{ image.height }}"
+        {% if fetch == true %}
+            fetchpriority="high"
+            loading="eager"
+        {% else %}
+            loading="lazy"
+        {% endif %}
+    {% if id != blank %}id="{{ id }}"{% endif %}
+>
+{% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
