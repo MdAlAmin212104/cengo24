@@ -1,3 +1,91 @@
+{%- capture logo_html -%}
+  {%- if settings.logo != blank or section.settings.transparent_logo != blank -%}
+    <div class="header__heading-logo-wrapper">
+
+      {%- if section.settings.transparent_logo != blank -%}
+        {%- assign transparent_logo_alt = section.settings.transparent_logo.alt | default: shop.name | escape -%}
+        {%- assign transparent_logo_height = settings.logo_width | divided_by: section.settings.transparent_logo.aspect_ratio -%}
+        {% capture transparent_sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
+        {% capture transparent_widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+
+        {{
+          section.settings.transparent_logo
+          | image_url: width: 600
+          | image_tag:
+            class: 'header__heading-logo header__heading-logo--transparent motion-reduce',
+            widths: transparent_widths,
+            height: transparent_logo_height,
+            width: settings.logo_width,
+            alt: transparent_logo_alt,
+            sizes: transparent_sizes,
+            preload: true
+        }}
+      {%- endif -%}
+
+      {%- if settings.logo != blank -%}
+        {%- assign default_logo_alt = settings.logo.alt | default: shop.name | escape -%}
+        {%- assign default_logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+        {% capture default_sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
+        {% capture default_widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+
+        {%- assign default_logo_class = 'header__heading-logo header__heading-logo--default motion-reduce' -%}
+        {%- if section.settings.transparent_logo == blank -%}
+          {%- assign default_logo_class = default_logo_class | append: ' no-transparent-logo' -%}
+        {%- endif -%}
+
+        {{
+          settings.logo
+          | image_url: width: 600
+          | image_tag:
+            class: default_logo_class,
+            widths: default_widths,
+            height: default_logo_height,
+            width: settings.logo_width,
+            alt: default_logo_alt,
+            sizes: default_sizes,
+            preload: true
+        }}
+      {%- else -%}
+        {%- assign default_text_logo_class = 'h2 header__heading-logo--default' -%}
+        {%- if section.settings.transparent_logo == blank -%}
+          {%- assign default_text_logo_class = default_text_logo_class | append: ' no-transparent-logo' -%}
+        {%- endif -%}
+
+        <span class="{{ default_text_logo_class }}">{{ shop.name }}</span>
+      {%- endif -%}
+
+    </div>
+  {%- else -%}
+    <span class="h2">{{ shop.name }}</span>
+  {%- endif -%}
+{%- endcapture -%}
+
+
+{%- capture default_logo_html -%}
+  {%- if settings.logo != blank -%}
+    <div class="header__heading-logo-wrapper">
+      {%- assign default_logo_alt = settings.logo.alt | default: shop.name | escape -%}
+      {%- assign default_logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+      {% capture default_sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
+      {% capture default_widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+
+      {{
+        settings.logo
+        | image_url: width: 600
+        | image_tag:
+          class: 'header__heading-logo motion-reduce',
+          widths: default_widths,
+          height: default_logo_height,
+          width: settings.logo_width,
+          alt: default_logo_alt,
+          sizes: default_sizes,
+          preload: true
+      }}
+    </div>
+  {%- else -%}
+    <span class="h2">{{ shop.name }}</span>
+  {%- endif -%}
+{%- endcapture -%}
 {% style %}
     .section-extras-color-{{ section.id }} {
     --gradient-background: {% if section.settings.color_background_gradient != blank %}{{ section.settings.color_background_gradient }}{% else %}{{ section.settings.color_background }}{% endif %};
@@ -29,28 +117,7 @@
                 <h1 class="header__heading mb-0">
                     {%- endif -%}
                     <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-                        {%- if settings.logo != blank -%}
-                            <div class="header__heading-logo-wrapper">
-                                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                                {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-                                {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                                {{
-                                settings.logo
-                                | image_url: width: 600
-                                | image_tag:
-                                class: 'header__heading-logo motion-reduce',
-                                widths: widths,
-                                height: logo_height,
-                                width: settings.logo_width,
-                                alt: logo_alt,
-                                sizes: sizes,
-                                preload: true
-                                }}
-                            </div>
-                        {%- else -%}
-                            <span class="h2">{{ shop.name }}</span>
-                        {%- endif -%}
+                        {{ default_logo_html }}
                     </a>
                     {%- if request.page_type == 'index' -%}
                 </h1>
@@ -128,28 +195,7 @@
                         <h1 class="header__heading mb-0">
                             {%- endif -%}
                             <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-                                {%- if settings.logo != blank -%}
-                                    <div class="header__heading-logo-wrapper">
-                                        {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                                        {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                                        {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-                                        {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                                        {{
-                                        settings.logo
-                                        | image_url: width: 600
-                                        | image_tag:
-                                        class: 'header__heading-logo motion-reduce',
-                                        widths: widths,
-                                        height: logo_height,
-                                        width: settings.logo_width,
-                                        alt: logo_alt,
-                                        sizes: sizes,
-                                        preload: true
-                                        }}
-                                    </div>
-                                {%- else -%}
-                                    <span class="h2">{{ shop.name }}</span>
-                                {%- endif -%}
+                            {{ logo_html }}
                             </a>
                             {%- if request.page_type == 'index' -%}
                         </h1>
@@ -241,28 +287,7 @@
                         <h1 class="header__heading mb-0">
                             {%- endif -%}
                             <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-                                {%- if settings.logo != blank -%}
-                                    <div class="header__heading-logo-wrapper">
-                                        {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                                        {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                                        {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-                                        {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                                        {{
-                                        settings.logo
-                                        | image_url: width: 600
-                                        | image_tag:
-                                        class: 'header__heading-logo motion-reduce',
-                                        widths: widths,
-                                        height: logo_height,
-                                        width: settings.logo_width,
-                                        alt: logo_alt,
-                                        sizes: sizes,
-                                        preload: true
-                                        }}
-                                    </div>
-                                {%- else -%}
-                                    <span class="h2">{{ shop.name }}</span>
-                                {%- endif -%}
+                            {{ logo_html }}
                             </a>
                             {%- if request.page_type == 'index' -%}
                         </h1>
@@ -343,28 +368,7 @@
                             <h1 class="header__heading mb-0">
                                 {%- endif -%}
                                 <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-                                    {%- if settings.logo != blank -%}
-                                        <div class="header__heading-logo-wrapper">
-                                            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                                            {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                                            {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-                                            {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                                            {{
-                                            settings.logo
-                                            | image_url: width: 600
-                                            | image_tag:
-                                            class: 'header__heading-logo motion-reduce',
-                                            widths: widths,
-                                            height: logo_height,
-                                            width: settings.logo_width,
-                                            alt: logo_alt,
-                                            sizes: sizes,
-                                            preload: true
-                                            }}
-                                        </div>
-                                    {%- else -%}
-                                        <span class="h2">{{ shop.name }}</span>
-                                    {%- endif -%}
+                            {{ logo_html }}
                                 </a>
                                 {%- if request.page_type == 'index' -%}
                             </h1>
@@ -505,28 +509,7 @@
                             <h1 class="header__heading mb-0">
                                 {%- endif -%}
                                 <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-                                    {%- if settings.logo != blank -%}
-                                        <div class="header__heading-logo-wrapper">
-                                            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                                            {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                                            {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-                                            {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                                            {{
-                                            settings.logo
-                                            | image_url: width: 600
-                                            | image_tag:
-                                            class: 'header__heading-logo motion-reduce',
-                                            widths: widths,
-                                            height: logo_height,
-                                            width: settings.logo_width,
-                                            alt: logo_alt,
-                                            sizes: sizes,
-                                            preload: true
-                                            }}
-                                        </div>
-                                    {%- else -%}
-                                        <span class="h2">{{ shop.name }}</span>
-                                    {%- endif -%}
+                            {{ logo_html }}
                                 </a>
                                 {%- if request.page_type == 'index' -%}
                             </h1>
@@ -629,28 +612,7 @@
                         <h1 class="header__heading mb-0">
                             {%- endif -%}
                             <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-                                {%- if settings.logo != blank -%}
-                                    <div class="header__heading-logo-wrapper">
-                                        {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                                        {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                                        {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-                                        {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                                        {{
-                                        settings.logo
-                                        | image_url: width: 600
-                                        | image_tag:
-                                        class: 'header__heading-logo motion-reduce',
-                                        widths: widths,
-                                        height: logo_height,
-                                        width: settings.logo_width,
-                                        alt: logo_alt,
-                                        sizes: sizes,
-                                        preload: true
-                                        }}
-                                    </div>
-                                {%- else -%}
-                                    <span class="h2">{{ shop.name }}</span>
-                                {%- endif -%}
+                            {{ logo_html }}
                             </a>
                             {%- if request.page_type == 'index' -%}
                         </h1>
@@ -754,28 +716,7 @@
                         <h1 class="header__heading mb-0">
                             {%- endif -%}
                             <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-                                {%- if settings.logo != blank -%}
-                                    <div class="header__heading-logo-wrapper">
-                                        {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                                        {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-                                        {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-                                        {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                                        {{
-                                        settings.logo
-                                        | image_url: width: 600
-                                        | image_tag:
-                                        class: 'header__heading-logo motion-reduce',
-                                        widths: widths,
-                                        height: logo_height,
-                                        width: settings.logo_width,
-                                        alt: logo_alt,
-                                        sizes: sizes,
-                                        preload: true
-                                        }}
-                                    </div>
-                                {%- else -%}
-                                    <span class="h2">{{ shop.name }}</span>
-                                {%- endif -%}
+                            {{ logo_html }}
                             </a>
                             {%- if request.page_type == 'index' -%}
                         </h1>
@@ -908,6 +849,174 @@
         }
     </script>
 {%- endif -%}
+
+{%- style -%}
+  :root {
+    --announcement-height: 0px;
+  }
+
+
+  .announcement-bar-section {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1010;
+  }
+
+  .section-header {
+    position: fixed !important;
+    top: var(--announcement-height) !important;
+    left: 0;
+    width: 100%;
+    z-index: 1009;
+    transition: all 0.3s ease;
+  }
+
+  .section-header .header-wrapper.section-extras-color-{{ section.id }} {
+    background-color: transparent !important;
+    background-image: none !important;
+    border-bottom: 1px solid transparent !important;
+    box-shadow: none !important;
+    transition: background-color 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
+  }
+
+  
+  .section-header .site-header {
+    transition: all 0.3s ease;
+  }
+
+  /* Fix for mobile menu background and text */
+  .section-header .offcanvas {
+    background-color: #ffffff !important;
+  }
+  .section-header .offcanvas .header__heading-link,
+  .section-header .offcanvas .site-nav__link,
+  .section-header .offcanvas .site-header__icon,
+  .section-header .offcanvas .bi,
+  .section-header .offcanvas .close-button,
+  .section-header .offcanvas .btn-reset {
+    color: #000000 !important;
+    fill: #000000 !important;
+  }
+
+  /* Transparent Header Styles */
+  .section-header {
+    position: fixed !important;
+    top: var(--announcement-height, 0);
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    background-color: transparent !important;
+  }
+
+  .section-header.is-scrolled {
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+
+  /* Navigation and Icons Color */
+  .section-header .site-header__icon,
+  .section-header .site-nav__link,
+  .section-header .header__heading-link,
+  .section-header .bi-chevron-down,
+  .section-header .bi-bag-check {
+    color: {{ section.settings.transparent_text_color }} !important;
+    fill: {{ section.settings.transparent_text_color }} !important;
+  }
+
+  .section-header .hamburger-menu span,
+  .section-header .hamburger-menu span::before,
+  .section-header .hamburger-menu span::after {
+    background-color: {{ section.settings.transparent_text_color }} !important;
+  }
+
+
+  .section-header.is-scrolled .site-nav__link,
+  .section-header.is-scrolled .header__heading-link,
+  .section-header.is-scrolled .bi-chevron-down,
+  .section-header.is-scrolled .bi-bag-check {
+    color: {{ section.settings.scrolled_text_color }} !important;
+    fill: {{ section.settings.scrolled_text_color }} !important;
+  }
+
+  .section-header.is-scrolled .hamburger-menu span,
+  .section-header.is-scrolled .hamburger-menu span::before,
+  .section-header.is-scrolled .hamburger-menu span::after {
+    background-color: {{ section.settings.scrolled_text_color }} !important;
+  }
+
+  
+
+  /* Logo Swapping */
+  .header__heading-logo--transparent {
+    display: block;
+  }
+  .header__heading-logo--default {
+    display: none;
+  }
+
+  /* If no transparent logo, show default */
+  .header__heading-logo--default.no-transparent-logo {
+    display: block;
+  }
+
+  .section-header.is-scrolled .header__heading-logo--transparent {
+    display: none;
+  }
+  .section-header.is-scrolled .header__heading-logo--default {
+    display: block;
+  }
+
+  .announcement-bar-section {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+  }
+
+  body {
+    padding-top: calc(var(--announcement-height, 0px)) !important;
+  }
+{%- endstyle -%}
+
+<script>
+  (function() {
+    const updateHeaderState = () => {
+      const header = document.querySelector('.section-header');
+      const announcement = document.querySelector('.announcement-bar-section');
+      
+      if (announcement) {
+        const height = announcement.offsetHeight;
+        document.documentElement.style.setProperty('--announcement-height', height + 'px');
+      }
+
+      if (header) {
+        if (window.scrollY > 20) {
+          header.classList.add('is-scrolled');
+        } else {
+          header.classList.remove('is-scrolled');
+        }
+      }
+    };
+
+    window.addEventListener('scroll', updateHeaderState, { passive: true });
+    window.addEventListener('resize', updateHeaderState);
+    
+    // Initial calls
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', updateHeaderState);
+    } else {
+      updateHeaderState();
+    }
+    
+    // Frequent check for dynamic height changes (e.g. images loading in announcement)
+    setTimeout(updateHeaderState, 1000);
+    setTimeout(updateHeaderState, 3000);
+  })();
+</script>
 
 {% schema %}
 {
@@ -1054,6 +1163,28 @@
       "step": 1,
       "label": "t:sections.all.padding.padding_bottom",
       "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Transparent Header Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "transparent_logo",
+      "label": "Transparent Logo",
+      "info": "Logo to show when header is transparent"
+    },
+    {
+      "type": "color",
+      "id": "transparent_text_color",
+      "label": "Transparent Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "scrolled_text_color",
+      "label": "Scrolled Text Color",
+      "default": "#000000"
     }
   ],
   "blocks": [

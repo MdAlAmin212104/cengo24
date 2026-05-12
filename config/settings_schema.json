@@ -23,6 +23,11 @@
       },
       {
         "type": "image_picker",
+        "id": "transparent_logo",
+        "label": "t:settings_schema.header.settings.transparent_logo.label"
+      },
+      {
+        "type": "image_picker",
         "id": "logo_white",
         "label": "t:settings_schema.header.settings.logo_white.label"
       },
